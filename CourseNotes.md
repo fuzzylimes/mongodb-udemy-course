@@ -49,3 +49,25 @@ const User = mongoose.model('user', UserSchema);
 * `User` above can now be refered to as the `User Class`.
     * `User` does NOT represent a single user, it represents the ENTIRE SET of data
 * Best practive is to only export the Class name when creating models in projects (making usable in the rest of the application)
+
+## Inserting Records
+* Start by creating a new instance of your model, complete with the parameters for that model:
+```js
+const joe = new User({ name: "Joe" });
+```
+* Once the instance has been created, you can use the `.save()` method to save it to mongo.
+
+## Mocha Tests
+* Using mocha for testing automatically gives you access to `describe` function (test case) and `it` method (test step).
+* Have to make assertions to do the evaluation
+    * `assert` package must be imported, not imediately accessible
+* Execute tests by running `mocha <test_folder_name>`.
+* As an alternative, you can set up an npm start rule to kick it off (same as above).
+
+### test_helper
+* `test_helper` file is created to handle things we want to be done related to the test
+    * In this example we're using it to establish connection over to mongo
+* Inside of `test_helper` you can use a `beforeEach()` function to define what needs to be done before each part of the test (such as wiping the db)
+* Need to use the `done` callback to pause tests to wait for long running tasks to finish
+    * `done` is provided by Mocha
+    * `beforeEach`, `describe` and `it` all accept the done callback
