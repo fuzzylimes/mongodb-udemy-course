@@ -56,6 +56,9 @@ const User = mongoose.model('user', UserSchema);
 const joe = new User({ name: "Joe" });
 ```
 * Once the instance has been created, you can use the `.save()` method to save it to mongo.
+* Save method will return a promise, which can then be used to move on to assertions in Mocha.
+    * After the new instance is created, Mongoose attaches an `isNew` proptery to the instance, defaulting to true
+    * Once this has been saved to the database, this is flipped to false
 
 ## Mocha Tests
 * Using mocha for testing automatically gives you access to `describe` function (test case) and `it` method (test step).
@@ -70,4 +73,5 @@ const joe = new User({ name: "Joe" });
 * Inside of `test_helper` you can use a `beforeEach()` function to define what needs to be done before each part of the test (such as wiping the db)
 * Need to use the `done` callback to pause tests to wait for long running tasks to finish
     * `done` is provided by Mocha
-    * `beforeEach`, `describe` and `it` all accept the done callback
+    * `beforeEach` and `it` accept the done callback
+* Use the `before` function to have the tests wait until the connection has been completed before starting
