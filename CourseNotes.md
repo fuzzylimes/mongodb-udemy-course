@@ -29,3 +29,23 @@ startGame()
 * Collections repersent a specific kind of data (you wouldn't typically mix with another collection)
 * We're using Mongoose for Node in this course
 * We're using Mocha for testing against the Node app
+
+## User Models
+* We create user models (using Mongoose in this case) to define how collections will be structured
+* This is where we're setting what the schema will be for that collection when accessing data within the collection.
+* Going to be using `mongoose.Schema` to define the model.
+* Schema is created like follows:
+```js
+const UserSchema = new Schema({
+    name: String
+})
+```
+* Note how the properties of the schema is assigned to a Javascript type of `String`.
+* In order to actually create the model (and in turn the collection), the following is required:
+```js
+const User = mongoose.model('user', UserSchema);
+```
+* If the defined collection does not exist in the connected database, it will create it on runtime.
+* `User` above can now be refered to as the `User Class`.
+    * `User` does NOT represent a single user, it represents the ENTIRE SET of data
+* Best practive is to only export the Class name when creating models in projects (making usable in the rest of the application)
