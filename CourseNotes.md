@@ -22,3 +22,10 @@ startGame()
     .catch((count) => alert(`You lost!\nYou only clicked ${count}/5 times!`));
 ```
 * Most libraries already have promises written, we'll be written the consumers to handle them (at least in this course).
+
+## Basic MongoDB Concepts
+* Mongo allows for multiple databases within a single mongo instance
+* Each database is made up of n number of collections
+* Collections repersent a specific kind of data (you wouldn't typically mix with another collection)
+* We're using Mongoose for Node in this course
+* We're using Mocha for testing against the Node app
