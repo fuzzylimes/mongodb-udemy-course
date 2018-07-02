@@ -49,6 +49,8 @@ const User = mongoose.model('user', UserSchema);
 * `User` above can now be refered to as the `User Class`.
     * `User` does NOT represent a single user, it represents the ENTIRE SET of data
 * Best practive is to only export the Class name when creating models in projects (making usable in the rest of the application)
+* Model classes give access to `find` and `findOne` methods.
+    * criteria is an object with search criteria
 
 ## Inserting Records
 * Start by creating a new instance of your model, complete with the parameters for that model:
@@ -59,6 +61,13 @@ const joe = new User({ name: "Joe" });
 * Save method will return a promise, which can then be used to move on to assertions in Mocha.
     * After the new instance is created, Mongoose attaches an `isNew` proptery to the instance, defaulting to true
     * Once this has been saved to the database, this is flipped to false
+* As soon as the instance has been created, an `_id` has been assigned
+
+## Query Records
+* Have two ways to retrieve records: `find` and `findone`
+    * `find` returns array of all matches
+    * `findOne` will return back first instance found
+* Can't just use the `_id` for comparison as is, must convert it to a string first.
 
 ## Mocha Tests
 * Using mocha for testing automatically gives you access to `describe` function (test case) and `it` method (test step).
