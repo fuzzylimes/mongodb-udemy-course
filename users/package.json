@@ -4,7 +4,7 @@
   "description": "Simple app to learn mongo",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests"
+    "test": "nodemon --exec 'mocha tests -R min'"
   },
   "author": "fuzzylimes",
   "license": "ISC",

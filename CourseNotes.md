@@ -22,6 +22,17 @@ startGame()
     .catch((count) => alert(`You lost!\nYou only clicked ${count}/5 times!`));
 ```
 * Most libraries already have promises written, we'll be written the consumers to handle them (at least in this course).
+* As long as whatever you're using returns a promise, you can continue to chain them with `.then()` calls:
+```js
+it('model instance remove', (done) => {
+    joe.remove()
+        .then(() => User.findOne({name: 'Joe'}))
+        .then((user) => {
+            assert(user === null);
+            done();
+        });
+});
+```
 
 ## Basic MongoDB Concepts
 * Mongo allows for multiple databases within a single mongo instance
@@ -68,6 +79,16 @@ const joe = new User({ name: "Joe" });
     * `find` returns array of all matches
     * `findOne` will return back first instance found
 * Can't just use the `_id` for comparison as is, must convert it to a string first.
+* Both `find` and `findOne` are used the same way. Always need to provide them an object to query off of.
+
+## Deleting Records
+* Mongoose calls a delete a `remove`
+* The Model Class supports:
+    * `remove()` - remove a bunch of records with some given criteria
+    * `findOneAndRemove()` - takes a criteria, only deletes first matching record
+    * `findByIdAndRemove()` - looks up an idea
+    * All three of these are basically the same thing, just different ways of deleting
+* An instance of a model only supports the `remove()` method. Only removes the specific instance.
 
 ## Mocha Tests
 * Using mocha for testing automatically gives you access to `describe` function (test case) and `it` method (test step).
