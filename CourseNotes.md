@@ -134,3 +134,13 @@ User.update({name: 'Joe'}, {name: 'Alex'})
     * `done` is provided by Mocha
     * `beforeEach` and `it` accept the done callback
 * Use the `before` function to have the tests wait until the connection has been completed before starting
+
+## Mongo Update Operators
+* Can be used with any of the update commands to send an instruction to mongo on how to update a record
+* Much more performant than retrieving the data and updating it locally, lets mongo do the work
+* The operators are just used inline like a normal mongo query/operation:
+```js
+User.update({name: 'Joe'}, {$inc: {postCount: 1}})
+```
+* Example above will do an increment on the `postCount` attribute for any record with a name of `Joe` by 1
+* [Here's a list of all the update operators](https://docs.mongodb.com/manual/reference/operator/update/)
