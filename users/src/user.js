@@ -11,7 +11,8 @@ const UserSchema = new Schema({
             message: 'Name must be longer than 2 characters.'
         }
     },
-    posts: [PostSchema]
+    posts: [PostSchema],
+    likes: Number
 });
 
 UserSchema.virtual('postCount').get(function() {
