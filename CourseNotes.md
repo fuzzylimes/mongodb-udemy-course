@@ -33,6 +33,18 @@ it('model instance remove', (done) => {
         });
 });
 ```
+* You can pass off promisses to a function and then deal with them there (for common, reusable code):
+```js
+function assertName(operation, done){
+    operation
+        .then(() => User.find({}))
+        .then((users) => {
+            assert(users.length === 1);
+            assert(users[0].name === 'Alex');
+            done();
+        });
+}
+```
 
 ## Basic MongoDB Concepts
 * Mongo allows for multiple databases within a single mongo instance
@@ -89,6 +101,23 @@ const joe = new User({ name: "Joe" });
     * `findByIdAndRemove()` - looks up an idea
     * All three of these are basically the same thing, just different ways of deleting
 * An instance of a model only supports the `remove()` method. Only removes the specific instance.
+
+## Updating Records
+* Like delete, there are two different sets of updates
+* Model Class specific:
+    * `update()`
+    * `findOneAndUpdate()`
+    * `findByIdAndUpdate()`
+* Model Instance specific:
+    * `update()`
+    * `set and save`
+* using `set()` will only update the record in memory NOT in the database. It must be used with `save()` to update the record.
+* `save()` is best suited when multiple updates are being done (like having multiple functions that do updates and saving at the end)
+* When using `update()` for class, you provide both the query and the replacement:
+```js
+User.update({name: 'Joe'}, {name: 'Alex'})
+```
+* All three of the class specific updates work exactly the same (query, replacement)
 
 ## Mocha Tests
 * Using mocha for testing automatically gives you access to `describe` function (test case) and `it` method (test step).
