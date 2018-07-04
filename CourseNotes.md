@@ -144,3 +144,29 @@ User.update({name: 'Joe'}, {$inc: {postCount: 1}})
 ```
 * Example above will do an increment on the `postCount` attribute for any record with a name of `Joe` by 1
 * [Here's a list of all the update operators](https://docs.mongodb.com/manual/reference/operator/update/)
+
+## Mongoose specific capabilities
+### Schema Validation
+* Model files can be updated to perform validation
+* Prevents invalid model data from being put into the database
+* Properties are kept in an object inside of the model file
+* To evaluate, you need to use `validate()` (async) or `validateSync()`:
+```js
+const validationResult = user.validateSync();
+```
+* The `validationResult` above has different properties, including the message that was set back in the model.
+    * Can be accessed by `validationResult.errors.name.message`.
+* Can set `validate` object inside of model definition to define a specific validation:
+```js
+const UserSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required.'],
+        validate: {
+            validator: (name) => name.length > 2,
+            message: 'Name must be longer than 2 characters.'
+        }
+    },
+    postCount: Number
+});
+```
