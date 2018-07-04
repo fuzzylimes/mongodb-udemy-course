@@ -170,3 +170,10 @@ const UserSchema = new Schema({
     postCount: Number
 });
 ```
+
+### Subdocuments
+* You can create relation by making subdocuments within a document (for whatever reason)
+* Create a new schema for whatever you want, and then embed it into the main model
+    * subobjects are not models
+* Please use the `findOneAndUpdate()` when adding or removing documents instead of constantly saving every two second.
+    * They can be used in conjunction with the `$pull` and `$push` update operators to remove or add records
