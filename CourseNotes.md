@@ -125,6 +125,7 @@ User.update({name: 'Joe'}, {name: 'Alex'})
     * `assert` package must be imported, not imediately accessible
 * Execute tests by running `mocha <test_folder_name>`.
 * As an alternative, you can set up an npm start rule to kick it off (same as above).
+* using `xit` instead of `it` will cause the test to be skipped
 
 ### test_helper
 * `test_helper` file is created to handle things we want to be done related to the test
@@ -177,3 +178,14 @@ const UserSchema = new Schema({
     * subobjects are not models
 * Please use the `findOneAndUpdate()` when adding or removing documents instead of constantly saving every two second.
     * They can be used in conjunction with the `$pull` and `$push` update operators to remove or add records
+
+### Virtual Types
+* Used in model, but don't get stored over in mongo
+* Whenever the virtual property is refered to, it will call a function back in the model
+* This is done by tagging with a getter
+```js
+UserSchema.virtual('postCount').get(function() {
+    return this.posts.length;
+});
+```
+* Notice above how we're using the `this` to access what's calling this function

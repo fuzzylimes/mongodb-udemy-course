@@ -33,7 +33,7 @@ describe('Subdocuments', () => {
             })
             .then(() => User.findOne({name: 'Joe'}))
             .then((user) => {
-                console.log(user);
+                // console.log(user);
                 assert(user.posts.length === 1);
                 assert(user.posts[0].title === 'Post One');
                 done();
@@ -66,7 +66,7 @@ describe('Subdocuments', () => {
             )
             .then(() => User.findOne({name: 'Joe'}))
             .then((user) => {
-                console.log(user);
+                // console.log(user);
                 assert(user.posts.length === 3);
                 assert(user.posts[2].title === 'Post Three');
                 done();
