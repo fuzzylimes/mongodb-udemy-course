@@ -189,3 +189,22 @@ UserSchema.virtual('postCount').get(function() {
 });
 ```
 * Notice above how we're using the `this` to access what's calling this function
+
+## Referencing between collections
+* Setting up references between documents between collections (think relational DB)
+* Assign an object with type `Schema.Types.ObjectId` and a ref equal to a model name:
+```js
+const BlogPostSchema = new Schema({
+    title: String,
+    content: String,
+    comments: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'comment'
+    }]
+});
+```
+* This ref value MUST match what's being defined in model, as shown below:
+```js
+const Comment = mongoose.model('comment', CommentSchema);
+
+```
