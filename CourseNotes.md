@@ -235,3 +235,27 @@ it.only('saves a relation between a user and a blog post', (done) => {
 ```
 * There is no way to recursively crawl like this. You only get one.
     * Mongoose will not allow it
+* ... But evidently there is a way to do it? Not sure why it was said that it wasn't possible:
+```js
+it.only('saves a full relation tree', (done) => {
+    User.findOne({name:'Joe'})
+        .populate({
+            path: 'blogPosts',
+            populate: {
+                path: 'comments',
+                model: 'comment',
+                populate: {
+                    path: 'user',
+                    model: 'user'
+                }
+            }
+        })
+        .then((user) => {
+            assert(user.name === 'Joe');
+            assert(user.blogPosts[0].title === 'JS is great');
+            assert(user.blogPosts[0].comments[0].content === 'This is a comment');
+            assert(user.blogPosts[0].comments[0].user.name === 'Joe');
+            done();
+        });
+});
+```
