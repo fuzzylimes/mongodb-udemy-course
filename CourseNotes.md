@@ -126,6 +126,7 @@ User.update({name: 'Joe'}, {name: 'Alex'})
 * Execute tests by running `mocha <test_folder_name>`.
 * As an alternative, you can set up an npm start rule to kick it off (same as above).
 * using `xit` instead of `it` will cause the test to be skipped
+* using `it.only` will run only that specific test case
 
 ### test_helper
 * `test_helper` file is created to handle things we want to be done related to the test
@@ -206,5 +207,31 @@ const BlogPostSchema = new Schema({
 * This ref value MUST match what's being defined in model, as shown below:
 ```js
 const Comment = mongoose.model('comment', CommentSchema);
-
 ```
+* Mongoose does magic behind the sceens when associating the data. In the following steps, Mongoose is actually handling the id referencing:
+```js
+joe = new User({name: 'Joe'});
+blogPost = new BlogPost({
+    title: 'JS is great',
+    content: 'Sure it is'
+});
+comment = new Comment({
+    content: 'This is a comment'
+});
+joe.blogPosts.push(blogPost);
+blogPost.comments.push(comment);
+comment.user = joe;
+```
+* When doing a query, you can add on a `populate` modifier to fill in the data for a specific field:
+```js
+it.only('saves a relation between a user and a blog post', (done) => {
+    User.findOne({ name: 'Joe' })
+        .populate('blogPosts')
+        .then((user) => {
+            console.log(user);
+            done();
+        });
+});
+```
+* There is no way to recursively crawl like this. You only get one.
+    * Mongoose will not allow it
