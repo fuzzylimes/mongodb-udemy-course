@@ -259,3 +259,24 @@ it.only('saves a full relation tree', (done) => {
         });
 });
 ```
+
+## Pagination
+* Use `skip` and `limit` to implement pagination
+* also need to use `sort` to make it meaningful
+* But on mongo 3.4 and up, you ALSO need to use `collation` in order to make the sort case insensitive
+```js
+it('can skip and limit the result set', (done) => {
+    User.find({})
+        .collation({locale: 'en'})
+        .sort({name: 1})
+        .skip(1)
+        .limit(2)
+        .then((users) => {
+            console.log(users);
+            assert(users.length == 2);
+            assert(users[0].name == 'Joe');
+            assert(users[1].name == 'Maria');
+            done();
+        });
+});
+```
